@@ -5,16 +5,17 @@ use DBI;
 use Mail::Sendmail;
 use URI::Escape;
 use HTML::Template;
+use FindBin qw ($Bin);
 
 my $q = CGI->new();
 
-chdir "/data/private/www/templates/Helpdesk" or die "Can't move to templates directory: $!";
+chdir "$Bin/../templates" or die "Can't move to templates directory: $!";
 
-my $dbh = DBI->connect("DBI:mysql:database=Helpdesk;host=bilin2.babraham.ac.uk","cgiuser","",
-		       {RaiseError=>0,AutoCommit=>1});
-
-#my $dbh = DBI->connect("DBI:mysql:database=Helpdesk;host=localhost","cgiuser","",
+#my $dbh = DBI->connect("DBI:mysql:database=Helpdesk;host=bilin2.babraham.ac.uk","cgiuser","",
 #		       {RaiseError=>0,AutoCommit=>1});
+
+my $dbh = DBI->connect("DBI:mysql:database=Helpdesk;host=localhost","cgiuser","",
+		       {RaiseError=>0,AutoCommit=>1});
 
 unless ($dbh) {
   print_header();
