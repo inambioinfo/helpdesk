@@ -1,0 +1,8 @@
+AuthUserFile /data/private/helpdesk/www/secure/.htpasswd
+AuthGroupFile /dev/null
+AuthName "Babraham Bioinformatics Secure Section"
+AuthType Basic
+
+<Limit GET POST>
+require valid-user
+</Limit>
