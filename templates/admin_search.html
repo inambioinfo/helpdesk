@@ -1,0 +1,181 @@
+<!-- TMPL_INCLUDE NAME="admin_header.html" -->
+
+
+  <h1>Search</h1>
+
+    <form method="POST">
+      <input type="hidden" name="action" value="run_search">
+
+      <table>
+	<tr>
+	  <th colspan="2">Filter on..</th>
+
+	  <th>Options</th>
+	</tr>
+
+	<tr>
+	  <th>Status</th>
+	  <th><input type="checkbox" name="status" value="1"></th>
+	  <td>
+	    Jobs which are currently
+	      <select name="status_option">
+		<option>open</option>
+		<option>closed</option>
+	      </select>
+	  </td>
+	</tr>
+
+	<tr>
+	  <th>Type</th>
+	  <th><input type="checkbox" name="commercial" value="1"></th>
+	  <td>
+	    Jobs which are
+	      <select name="commercial_option">
+		<option value="1">Commercial</option>
+		<option value="0" selected>Academic</option>
+	      </select>
+	  </td>
+	</tr>
+
+	<tr>
+	  <th>Assigned</th>
+
+	  <th><input type="checkbox" name="assigned" value="1"></th>
+	  <td>
+	    Jobs assigned to
+	      <select name="assigned_person">
+	      <!-- TMPL_LOOP NAME=PEOPLE -->
+		<option value="<!-- TMPL_VAR NAME=ID -->"><!-- TMPL_VAR NAME=FIRST --> <!-- TMPL_VAR NAME=LAST --></option>
+	      <!-- /TMPL_LOOP -->
+	      </select>
+	  </td>
+	</tr>
+
+	<tr>
+	  <th>Submitter</th>
+	  <th><input type="checkbox" name="submitter" value="1"></th>
+	  <td>
+
+	    Jobs submitted by:<br><br>
+	    Name
+	    <input type="text" size="10" name="first_name">(first) 
+	    <input type="text" size="10" name="last_name">(last)
+	    <br><br>
+	    Email:
+	    <input type="text" size="35" name="email">
+	  </td>
+	</tr>
+
+	<tr>
+
+	  <th>Public ID</th>
+	  <th><input type="checkbox" name="public_id" value="1"></th>
+	  <td>
+	    Public ID <input type="text" size="20" name="public_id_value">
+	  </td>
+	</tr>
+
+	<tr>
+
+	  <th rowspan="2">Date</th>
+	  <th rowspan="2"><input type="checkbox" name="date" value="1"></th>
+	  <td>
+	    <input type="radio" name="date_type" checked  value="last">
+	    Jobs submitted in the last
+	    <select name="submitted_interval">
+	      <option>day</option>
+	      <option selected>week</option>
+
+	      <option>month</option>
+	      <option>year</option>
+	    </select>
+	  </td>
+	</tr>
+
+	  <tr>
+	    <td>
+
+	    <input type="radio" name="date_type" value="between">
+
+	    <select name="datefield">
+	      <option value="opened">Jobs opened</option>
+	      <option value="closed">Jobs closed</option>
+	    </select>
+	    from
+	      <select name="month_from">
+		<option>Jan</option>
+		<option>Feb</option>
+		<option>Mar</option>
+		<option>Apr</option>
+
+		<option>May</option>
+		<option>Jun</option>
+		<option>Jul</option>
+		<option>Aug</option>
+		<option>Sep</option>
+		<option>Oct</option>
+
+		<option>Nov</option>
+		<option>Dec</option>
+	      </select>
+	      <select name="year_from">
+	      <!-- TMPL_LOOP NAME=YEARS -->
+		<option><!-- TMPL_VAR NAME=YEAR --></option>
+	      <!-- /TMPL_LOOP -->
+	      </select>
+	    to
+	      <select name="month_to">
+		<option>Jan</option>
+		<option>Feb</option>
+
+		<option>Mar</option>
+		<option>Apr</option>
+		<option>May</option>
+		<option>Jun</option>
+		<option>Jul</option>
+		<option>Aug</option>
+
+		<option>Sep</option>
+		<option>Oct</option>
+		<option>Nov</option>
+		<option>Dec</option>
+	      </select>
+	      <select name="year_to">
+	      <!-- TMPL_LOOP NAME=YEARS -->
+		<option><!-- TMPL_VAR NAME=YEAR --></option>
+	      <!-- /TMPL_LOOP -->
+	      </select>
+	  </td>
+	</tr>
+
+	<tr>
+
+	  <th>Keyword</th>
+	  <th><input type="checkbox" name="keyword" value="1"></th>
+	  <td>
+	    Jobs with:
+	    <input type="text" size="10" name="keyword_data"> in the
+
+	    <select name="keyword_source">
+	      <option selected>title</option>
+	      <option>description</option>
+
+	    </select>
+	  </td>
+	</tr>	
+
+      </table>
+
+      <p class="center">
+      
+	<input type="submit" value="Search">
+      </p>
+
+      <p class="center" style="font-size:60%">
+	Show all on 1 page <input type="checkbox" name="showall">
+      </p>
+
+    </form>
+
+
+<!-- TMPL_INCLUDE NAME="admin_footer.html" -->

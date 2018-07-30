@@ -1,0 +1,35 @@
+<!-- TMPL_INCLUDE NAME="admin_header.html" -->
+
+<h1>Person Details</h1>
+    <form method="POST">
+      <input type="hidden" name="person_id" value="<!-- TMPL_VAR NAME=PERSON_ID -->">
+      <input type="hidden" name="action" value="update_person">
+      <input type="hidden" name="job_id" value="<!-- TMPL_VAR NAME=JOB_ID -->">
+
+    <table>
+      <tr>
+	<th>First Name</th>
+
+	<td><input type="text" name="first_name" value="<!-- TMPL_VAR NAME=FIRST -->" size="30"></td>
+      </tr>
+      <tr>
+	<th>Last Name</th>
+	<td><input type="text" name="last_name" value="<!-- TMPL_VAR NAME=LAST -->" size="30"></td>
+      </tr>
+      <tr>
+	<th>Email</th>
+
+	<td><!-- TMPL_VAR NAME=EMAIL --></td>
+      </tr>
+      <tr>
+	<th>Phone</th>
+	<td><input type="text" name="phone" value="<!-- TMPL_VAR NAME=PHONE -->" size="30"></td>
+      </tr>
+    </table>
+      <p class="center">
+
+	<input type="submit" value="Update Details">
+      </p>
+      </form>
+
+<!-- TMPL_INCLUDE NAME="admin_footer.html" -->

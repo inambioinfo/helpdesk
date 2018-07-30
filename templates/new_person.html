@@ -1,0 +1,48 @@
+<!-- TMPL_INCLUDE NAME="header.html" -->
+
+    <h2 class="center">Personal Details</h2>
+
+    <p class="center">
+      You appear not to have used this system before so
+      we need to collect a few details about you.  You
+      will only need to supply this information once, and
+      will then just be able to use your email address.
+    </p>
+
+    <form method="POST">
+      <input type="hidden" name="action" value="new_job_with_details">
+      <input type="hidden" name="email" value="<!-- TMPL_VAR NAME=EMAIL -->">
+      <input type="hidden" name="title" value="<!-- TMPL_VAR NAME=TITLE -->">
+      <input type="hidden" name="description" value="<!-- TMPL_VAR NAME=DESCRIPTION -->">
+
+      <table>
+
+	<tr>
+	  <th>First Name</th>
+	  <td><input type="text" name="first_name" size="50"></td>
+	</tr>
+
+	<tr>
+	  <th>Last Name</th>
+	  <td><input type="text" name="last_name" size="50"></td>
+	</tr>
+
+	<tr>
+	  <th>Email</th>
+	  <td><!-- TMPL_VAR NAME=EMAIL --></td>
+	</tr>
+
+	<tr>
+	  <th>Phone</th>
+	  <td><input type="text" name="phone" size="50"></td>
+	</tr>
+
+      </table>
+
+      <p class="center">
+	<input type="submit">
+      </p>
+
+      </form>
+
+<!-- TMPL_INCLUDE NAME="footer.html" -->

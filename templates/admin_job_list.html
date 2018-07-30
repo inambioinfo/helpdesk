@@ -1,0 +1,77 @@
+<!-- TMPL_INCLUDE NAME="admin_header.html" -->
+
+<!-- TMPL_IF NAME=UNALLOCATED -->
+
+  <table class="compact">
+    <tr>
+      <th>Title</th>
+      <th>For</th>
+      <th>Type</th>
+      <th>Open</th>
+      <th>Assign to</th>
+    </tr>
+
+  <!-- TMPL_LOOP NAME=UNALLOCATED -->
+    <tr>
+      <td><!-- TMPL_VAR NAME=TITLE --></td>
+      <td><!-- TMPL_VAR NAME=FIRST --> <!-- TMPL_VAR NAME=LAST --></td>
+      <td><!-- TMPL_IF NAME=COMMERCIAL -->Commercial<!-- TMPL_ELSE -->Academic<!-- /TMPL_IF --></td>
+      <td>
+	<form method="GET">
+	  <input type="hidden" name="action" value="show_job">
+	  <input type="hidden" name="job_id" value="<!-- TMPL_VAR NAME=JOB_ID -->">
+	  <input type="submit" value="Open">
+	</form>
+      </td>
+      <td>
+	<form method="GET">
+	  <input type="hidden" name="action" value="assign">
+	  <input type="hidden" name="job_id" value="<!-- TMPL_VAR NAME=JOB_ID -->">
+	<select name="assign_to">
+	  <!-- TMPL_LOOP NAME=ASSIGN_TO -->
+	  <option value="<!-- TMPL_VAR NAME=ID -->"><!-- TMPL_VAR NAME=FIRST --> <!-- TMPL_VAR NAME=LAST --></option>
+	  <!-- /TMPL_LOOP -->
+	</select>
+	  <input type="submit" value="Assign">
+	</form>
+       </td>
+     </tr>
+  <!-- /TMPL_LOOP -->
+  </table>
+
+<!-- TMPL_ELSE -->
+<h2 class="center">No unallocated jobs</h2>
+<!-- /TMPL_IF -->
+
+<!-- TMPL_IF NAME=ALLOCATED -->
+  <table class="compact">
+    <tr>
+      <th>Title</th>
+      <th>For</th>
+      <th>Type</th>
+      <th>Open</th>
+    </tr>
+
+    <!-- TMPL_LOOP NAME=ALLOCATED -->
+    <tr>
+      <td><!-- TMPL_VAR NAME=TITLE --></td>
+      <td><!-- TMPL_VAR NAME=FIRST --> <!-- TMPL_VAR NAME=LAST --></td>
+      <td><!-- TMPL_IF NAME=COMMERCIAL -->Commercial<!-- TMPL_ELSE -->Academic<!-- /TMPL_IF --></td>
+      <td>
+	<form method="GET">
+	  <input type="hidden" name="action" value="show_job">
+
+	  <input type="hidden" name="job_id" value="<!-- TMPL_VAR NAME=ID -->">
+	  <input type="submit" value="Open">
+	</form>
+       </td>
+     </tr>
+     <!-- /TMPL_LOOP -->
+   </table>
+
+<!-- TMPL_ELSE -->
+  <h2 class="center">No Allocated jobs</h2>
+
+<!-- /TMPL_IF -->
+
+<!-- TMPL_INCLUDE NAME="admin_footer.html" -->

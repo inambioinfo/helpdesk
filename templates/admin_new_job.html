@@ -1,0 +1,48 @@
+<!-- TMPL_INCLUDE NAME="admin_header.html" -->
+
+
+  <h2 class="center">New Job</h2>
+
+  <form method="POST">
+    <input type="hidden" name="action" value="complete_new_job">
+
+  <table class="dynamic">
+
+    <tr>
+      <th colspan="2">Submitter Details</th>
+
+    </tr>
+
+    <tr>
+      <th>Email</th>
+      <td><input name="email" size="50" value="<!-- TMPL_VAR NAME=EMAIL -->"> Send email: <input type="checkbox" name="send_email" checked></td>
+    </tr>
+
+    <tr>
+      <th colspan="2">Job Details</th>
+
+    </tr>
+
+    <tr>
+      <th>Title</th>
+      <td><input name="title" size="50"> Commercial: <input type="checkbox" name="commercial"></td>
+    </tr>
+
+
+    <tr>
+      <th>Full Description</th>
+
+      <td><textarea rows="20"  name="description"><!-- TMPL_IF NAME=PUBLIC_ID -->This is a follow up to a previous job (public_id=<!-- TMPL_VAR NAME=PUBLIC_ID -->)
+
+<!-- /TMPL_IF --></textarea></td>
+    </tr>
+
+  </table>
+  <p class="center">
+    <input type="submit" value="Submit Request">
+  </p>
+  </form>
+
+
+
+<!-- TMPL_INCLUDE NAME="admin_footer.html" -->

@@ -1,0 +1,64 @@
+<!-- TMPL_INCLUDE NAME="admin_header.html" -->
+
+
+  <h1>Search Results</h1>
+
+  <!-- TMPL_IF NAME=HITS -->
+
+  <h4 class="center">Your search returned <!-- TMPL_VAR NAME=HIT_COUNT --> hits<br>
+  Showing hits <!-- TMPL_VAR NAME=HIT_START --> - <!-- TMPL_VAR NAME=HIT_END --></h4>
+
+  <table class="compact">
+    <tr>
+
+      <th>Title</th>
+      <th>For</th>
+      <th>Email</th>
+      <th>Assigned to</th>
+      <th>Opened</th>
+      <th>Closed</th>
+      <th>Public ID</th>
+      <th>Type</th>
+      <th>Duration</th>
+      <th>Open</th>
+    </tr>
+
+    <!-- TMPL_LOOP NAME=HITS -->
+    <tr>
+      <td><!-- TMPL_VAR NAME=TITLE --></td>
+      <td><!-- TMPL_VAR NAME=SUBMITTER_NAME --></td>
+      <td><!-- TMPL_VAR NAME=SUBMITTER_EMAIL --></td>
+      <td><!-- TMPL_VAR NAME=ASSIGNED_NAME --></td>
+      <td><!-- TMPL_VAR NAME=OPENED --></td>
+      <td><!-- TMPL_IF NAME=CLOSED --><!-- TMPL_VAR NAME=CLOSED --><!-- TMPL_ELSE -->Still open<!-- /TMPL_IF --></td>
+      <td><!-- TMPL_VAR NAME=PUBLIC_ID --></td>
+      <td><!-- TMPL_IF NAME=COMMERCIAL -->Commercial<!-- TMPL_ELSE -->Academic<!-- /TMPL_IF --></td>
+      <td><!-- TMPL_IF NAME=CLOSED --><!-- TMPL_VAR NAME=DURATION --><!-- TMPL_ELSE -->Still open<!-- /TMPL_IF --></td>
+
+      <td>
+	<form method="GET">
+	  <input type="hidden" name="action" value="show_job">
+	  <input type="hidden" name="job_id" value="<!-- TMPL_VAR NAME=ID -->">
+	  <input type="submit" value="Open">
+	</form>
+      </td>
+     </tr>
+     <!-- /TMPL_LOOP -->
+     </table>
+
+     <!-- TMPL_IF NAME=PAGES -->
+     <p class="center">
+     <!-- TMPL_LOOP NAME=PAGES -->
+	<!-- TMPL_IF NAME=CURRENT -->
+	<!-- TMPL_VAR NAME=PAGE -->
+	<!-- TMPL_ELSE -->
+	<a href="helpdeskadmin.cgi?<!-- TMPL_VAR NAME=SEARCH_PARAMS -->&page=<!-- TMPL_VAR NAME=PAGE -->"><!-- TMPL_VAR NAME=PAGE --></a>
+	<!-- /TMPL_IF -->
+      <!-- /TMPL_LOOP -->
+      <!-- /TMPL_IF -->
+	</p>
+     <!-- TMPL_ELSE -->
+     <h2 class="center">No hits found</h2>
+     <!-- /TMPL_IF -->
+
+<!-- TMPL_INCLUDE NAME="admin_footer.html" -->

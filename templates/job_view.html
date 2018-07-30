@@ -1,0 +1,25 @@
+<!-- TMPL_INCLUDE NAME="header.html" -->
+
+  <div class="job_summary">
+    <h4>User:<!-- TMPL_VAR NAME=USER_FIRST --> <!-- TMPL_VAR NAME=USER_LAST --> (<!-- TMPL_VAR NAME=USER_PHONE -->) | <!-- TMPL_VAR NAME=DATE -->  | <span class="<!-- TMPL_VAR NAME=STATUS -->"><!-- TMPL_VAR NAME=STATUS --></span> | Assigned to:<!-- TMPL_IF NAME= ASSIGNED_NAME --><!-- TMPL_VAR NAME=ASSIGNED_NAME --><!-- TMPL_ELSE -->Not yet assigned<!-- /TMPL_IF --></h4>
+
+    <h3><!-- TMPL_VAR NAME=TITLE --></h3>
+
+    <p><!-- TMPL_VAR NAME=SUMMARY --></p>
+  </div>
+
+<!-- TMPL_LOOP NAME=NOTES -->
+  <div class="note" id="NOTE<!-- TMPL_VAR NAME=ID -->">
+    <h4>Note on <!-- TMPL_VAR NAME=DATE --> from <!-- TMPL_VAR NAME=FIRST --> <!-- TMPL_VAR NAME=LAST --></h4>
+
+    <p><!-- TMPL_VAR NAME=TEXT --></p>
+
+    <div class="files">
+      <!-- TMPL_LOOP NAME=FILES -->
+      <a href="helpdeskuser.cgi/<!-- TMPL_VAR NAME=URI_NAME -->?action=send_file&amp;file_id=<!-- TMPL_VAR NAME=ID -->&amp;public_id=<!-- TMPL_VAR NAME=PUBLIC_ID -->"><!-- TMPL_VAR NAME=NAME --></a>&nbsp;&nbsp;
+      <!-- /TMPL_LOOP -->
+    </div>
+  </div>
+<!-- /TMPL_LOOP -->
+
+<!-- TMPL_INCLUDE NAME="footer.html" -->

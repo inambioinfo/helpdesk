@@ -1,0 +1,74 @@
+<!-- TMPL_INCLUDE NAME="admin_header.html" -->
+
+    <h2 class="center">Personal Details</h2>
+
+    <p class="center">
+      You appear not to have used this system before so
+      we need to collect a few details about you.  You
+      will only need to supply this information once, and
+      will then just be able to use your email address.
+    </p>
+
+    <p class="center">
+      Please check that the email address below is correct
+      before filling this form in. If you've used this system
+      before you shouldn't see this page and it means the email
+      you're using this time isn't the same as you used before.
+    </p>
+
+    <!-- TMPL_IF NAME=EMAIL_WARNING -->
+    <h2 class="center">Warning</h2>
+    <p class=warning>
+      You have used a bbsrc.ac.uk email address. All Babraham
+      addresses are now babraham.ac.uk so don't continue unless
+      you know that <!-- TMPL_VAR NAME=EMAIL --> is their current
+      and only address, otherwise you end up duplicating entries
+      in our database.
+    </p>
+    <!-- /TMPL_IF -->
+
+
+    <form method="POST">
+      <input type="hidden" name="action" value="new_job_with_details">
+      <input type="hidden" name="email" value="<!-- TMPL_VAR NAME=EMAIL -->">
+      <input type="hidden" name="title" value="<!-- TMPL_VAR NAME=TITLE -->">
+      <input type="hidden" name="description" value="<!-- TMPL_VAR NAME=DESCRIPTION -->">
+      <input type="hidden" name="commercial" value="<!-- TMPL_VAR NAME=COMMERCIAL -->">
+
+      <table>
+
+	<tr>
+	  <th>First Name</th>
+	  <td><input type="text" name="first_name" size="50"></td>
+	</tr>
+
+	<tr>
+	  <th>Last Name</th>
+	  <td><input type="text" name="last_name" size="50"></td>
+	</tr>
+
+	<tr>
+	  <th>Email</th>
+	  <td><!-- TMPL_VAR NAME=EMAIL --></td>
+	</tr>
+
+	<tr>
+	  <th>Phone</th>
+	  <td><input type="text" name="phone" size="50"></td>
+	</tr>
+
+      </table>
+
+      <p class="center">
+
+	<!-- TMPL_IF NAME=EMAIL_WARNING -->
+	<input type="submit" value="Ignore Warning and Add Details">
+	<!-- TMPL_ELSE -->
+	<input type="submit" value="Add Details">
+	<!-- /TMPL_IF -->
+
+      </p>
+
+      </form>
+
+<!-- TMPL_INCLUDE NAME="admin_footer.html" -->

@@ -1,0 +1,32 @@
+<!-- TMPL_INCLUDE NAME="admin_header.html" -->
+
+    <h2 class="center">Reopen Job</h2>
+
+    <form method="POST">
+      <input type="hidden" name="action" value="reopen_job">
+      <input type="hidden" name="job_id" value="<!-- TMPL_VAR NAME=ID -->">
+      <input type="hidden" name="checked" value="1">
+      <table>
+	<tr>
+
+	  <th>Assign to:</th>
+	  <td>
+	    <select name="assign">
+	      <option value="">[Leave unassigned]</option>
+	      <!-- TMPL_LOOP NAME=PEOPLE -->
+	      <option value="<!-- TMPL_VAR NAME=ID -->"><!-- TMPL_VAR NAME=FIRST --> <!-- TMPL_VAR NAME=LAST --></option>
+	      <!-- /TMPL_LOOP -->
+	    </select>
+	  </td>
+	</tr>
+	<tr>
+	  <th>Send email</th>
+	  <td><input type="checkbox" name="send_email" checked></td>
+	</tr>
+      </table>
+
+      <p class="center"><input type="submit" value="Reopen Job"></p>
+    </form>
+
+
+<!-- TMPL_INCLUDE NAME="admin_footer.html" -->

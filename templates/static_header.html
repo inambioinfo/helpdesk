@@ -1,0 +1,309 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+      <title>Babraham Bioinformatics Helpdesk</title>
+      <style type="text/css">
+
+BODY {
+  background-color: white;
+  font-family: Arial,Helvetica,Sans-serif;
+}
+
+H1{
+  color: #336699;
+  text-align:center;
+  clear: both;
+  margin-top: 0.5em;
+}
+
+H2{
+  color: red;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+H3{
+  clear: both;
+  font-style: italic;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+H4{
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+H5{
+  font-family: "Times New Roman", Times, serif;
+  font-style: italic;
+}
+
+HR { 
+  clear: both;
+}
+
+
+P { 
+  clear: both;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+
+UL,OL{
+  margin-left: 10%;
+  margin-right: 5%;
+  font-family: Arial, Verdana, Helvetica, sans-serif;
+}
+
+UL.links { 
+  font-style: italic;
+  font-size:1.1em;
+}
+
+UL.links LI { 
+  margin-bottom:0.2em;
+}
+
+LI{
+  font-family: Arial, Verdana, Helvetica, sans-serif;
+  color: black;
+  margin-bottom: 1em;
+}
+
+TABLE { 
+  border-left: 5%;
+  border-right: 5%;
+  margin-top: 1em;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+TABLE.compact {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 0.8em;
+}
+
+TABLE.layout { 
+  padding-left: 0;
+  padding-right: 0;
+
+}
+
+TABLE.layout TD { 
+  background: white;
+  white-space: nowrap;
+}
+
+TH{
+  font-family: Arial, Verdana, Helvetica, sans-serif;
+  color: white;
+  background: #336699;
+  padding: 0.5em;
+}
+
+
+TD{
+  font-family: Arial, Verdana, Helvetica, sans-serif;
+  padding: 0.5em;
+  background: #DDDDDD;
+}
+
+TABLE.compact TD {  
+  padding: 0.3em;
+}
+
+
+TEXTAREA {
+  font-family: "MS Courier New",Courier, Prestige, Monospace;
+  font-size: 0.8em;
+}
+
+PRE {
+  font-family: "MS Courier New",Courier, Prestige, Monospace;
+}
+
+IMG.right { 
+  float: right;
+  margin-left: 1em;
+  margin-bottom: 1em;
+
+}
+
+IMG.left { 
+  float: left;
+  margin-right: 1em;
+  margin-bottom: 1em;
+
+}
+
+A IMG { 
+  border: 0;
+}
+
+FORM { 
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.green {
+  color: green;
+  font-weight: bold;
+}
+
+.red {
+  color: red;
+  font-weight: bold;
+}
+
+.center { 
+  text-align: center;
+}
+
+.nobreak {  
+  clear: none;
+}
+
+div.job_summary, div.note, div.privatenote { 
+  border-radius: 0.5em;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1em;
+  margin-top: 1em;
+  border: 2px;
+  border-style: solid;
+  overflow: auto;
+}
+
+div.note { 
+
+  border-color: #336699;
+  overflow: auto;
+}
+
+div.privatenote { 
+  border-color: #ff0000;
+  overflow: auto;
+}
+
+div.note h4 { 
+  color: #336699;
+  margin-left: 1em;
+  margin-bottom: 0;
+  margin-top: 0.2em;
+}
+
+div.privatenote h4 { 
+  color: #ff0000;
+  margin-left: 1em;
+  margin-bottom: 0;
+  margin-top: 0.2em;
+}
+
+div.files {
+  margin: 0 1em 5px 1em;
+  overflow:auto;
+}
+
+div.job_summary h2 {
+  text-align: center;
+  margin: 0.2em;
+}
+
+div.job_summary h3 {
+  color: red;
+  font-style: normal;
+  text-align: center;
+  margin: 0.7em;
+}
+
+div.job_summary h4 { 
+  text-align: center;
+  margin: 0.2em;
+  font-size: 0.8em;
+}
+
+table.compact {  
+  width: 80%;
+}
+
+table.dynamic {  
+  width: 80%;
+}
+
+textarea {
+  padding: 0;
+  margin: 0;
+  width: 97%;
+  overflow: auto;
+}
+
+table.compact input { 
+  vertical-align: middle;
+}
+
+div.main_linkbar { 
+  background-color: yellow;
+  padding: 0.3em;
+  border: 0;
+  margin:0;
+}
+
+div.main_linkbar a{ 
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+div.main_linkbar a:hover{ 
+  color: red;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+div.job_toolbar { 
+  background-color: #C8C8FF;
+  padding: 0.3em;
+  border: 0;
+  margin:0;
+  margin-bottom: 1em;
+}
+div.job_toolbar a{ 
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+div.job_toolbar a:hover{ 
+  color: red;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+
+div.login { 
+  float: right;
+  border:0;
+  margin:0;
+  padding: 0;
+  margin-right: 1em;
+}
+
+.OPEN { 
+  color: green;
+}
+
+.CLOSED { 
+  color: red;
+}
+      </style>
+      <link rel=stylesheet type="text/css" href="/styles/top-style.css">
+      <link rel=stylesheet type="text/css" href="/styles/helpdesk-style.css">
+  </head>
+
+  <body>
+    <h1>Babraham Bioinformatics Helpdesk</h1>

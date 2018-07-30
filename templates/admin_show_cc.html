@@ -1,0 +1,36 @@
+<!-- TMPL_INCLUDE NAME="admin_header.html" -->
+
+<h1>Job CCs</h1>
+
+    <table>
+
+      <tr>
+	<th>Email</th>
+	<th>Remove</th>
+      </tr>
+
+      <!-- TMPL_IF NAME=CCS -->
+      <!-- TMPL_LOOP NAME=CCS -->
+      <tr>
+	<td><a href="mailto:<!-- TMPL_VAR NAME=EMAIL -->"><!-- TMPL_VAR NAME=EMAIL --></a></td>
+	<td><a href="helpdeskadmin.cgi?action=remove_cc&amp;cc_id=<!-- TMPL_VAR NAME=CC_ID -->">Remove</a></td>
+      </tr>
+      <!-- /TMPL_LOOP -->
+      <!-- TMPL_ELSE -->
+      <tr>
+	<td colspan=2 class="center">No CCs</td>
+      </tr>
+      <!-- /TMPL_IF -->
+    </table>
+    <form action="helpdeskadmin.cgi" method="GET">
+      <p class="center">
+	<input type="hidden" name="job_id" value="<!-- TMPL_VAR NAME=JOB_ID -->">
+	<input type="hidden" name="action" value="add_cc">
+	<input type="text" name="email">
+	<input type="submit" value="Add CC">
+      </p>
+    </form>
+
+    <p class="center"><a href="helpdeskadmin.cgi?action=show_job&amp;job_id=<!-- TMPL_VAR NAME=JOB_ID -->">Return to Job</a></p>
+
+<!-- TMPL_INCLUDE NAME="admin_footer.html" -->

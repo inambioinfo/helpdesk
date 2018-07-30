@@ -1,0 +1,54 @@
+<!-- TMPL_INCLUDE NAME="admin_header.html" -->
+
+    <h2 class="center">Close Job</h2>
+
+    <form method="POST">
+      <input type="hidden" name="action" value="close_job">
+      <input type="hidden" name="job_id" value="<!-- TMPL_VAR NAME=ID -->">
+
+      <!-- TMPL_IF NAME=TIMES -->
+
+      <h3 class="center">Recorded Times</h2>
+
+      <table>
+	<tr>
+	  <th>Date</th>
+	  <th>Time</th>
+	</tr>
+
+	<!-- TMPL_LOOP NAME=TIMES -->
+	<tr>
+	  <td><!-- TMPL_VAR NAME=DATE ESCAPE=HTML --></td>
+	  <td><!-- TMPL_VAR NAME=TIME ESCAPE=HTML --></td>
+	</tr>
+	<!-- /TMPL_LOOP -->
+	
+      </table>
+
+      <p class="center">Total recorded time = <strong><!-- TMPL_VAR NAME=TOTAL_TIME ESCAPE=HTML --></strong> hours</p>
+
+      <!-- /TMPL_IF -->
+
+      <table>
+	<tr>
+
+	  <th>Set job level</th>
+	  <td>
+	    <select name="level">
+	      <!-- TMPL_LOOP NAME=DURATION -->
+	      <option value="<!-- TMPL_VAR NAME=DURATION_ID ESCAPE=HTML -->"><!-- TMPL_VAR NAME=DURATION_NAME ESCAPE=HTML --></option>
+	      <!-- /TMPL_LOOP -->
+	    </select>
+	  </td>
+	</tr>
+	<tr>
+	  <th>Send email</th>
+	  <td><input type="checkbox" name="send_email" checked></td>
+	</tr>
+      </table>
+
+      <p class="center"><input type="submit" value="Close Job"></p>
+    </form>
+
+
+<!-- TMPL_INCLUDE NAME="admin_footer.html" -->

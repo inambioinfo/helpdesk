@@ -1,0 +1,46 @@
+<!-- TMPL_INCLUDE NAME="header.html" -->
+
+
+  <h2 class="center">New Job</h2>
+
+  <form method="POST">
+    <input type="hidden" name="action" value="complete_new_job">
+
+  <table class="dynamic">
+
+    <tr>
+      <th colspan="2">Submitter Details</th>
+
+    </tr>
+
+    <tr>
+      <th>Email</th>
+      <td><input name="email" size="70"></td>
+    </tr>
+
+    <tr>
+      <th colspan="2">Job Details</th>
+
+    </tr>
+
+    <tr>
+      <th>Title</th>
+      <td><input name="title" size="70"></td>
+    </tr>
+
+
+    <tr>
+      <th>Full Description</th>
+
+      <td><textarea cols="52" rows="20"  name="description"></textarea></td>
+    </tr>
+
+  </table>
+  <p class="center">
+    <input type="submit" value="Submit Request">
+  </p>
+  </form>
+
+
+
+<!-- TMPL_INCLUDE NAME="footer.html" -->

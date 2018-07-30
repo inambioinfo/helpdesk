@@ -1,0 +1,47 @@
+<!-- TMPL_INCLUDE NAME="admin_header.html" -->
+
+<h1>Person Details</h1>
+    <form method="GET">
+      <input type="hidden" name="person_id" value="<!-- TMPL_VAR NAME=PERSON_ID -->">
+      <input type="hidden" name="action" value="show_person">
+      <input type="hidden" name="edit" value="<!-- TMPL_VAR NAME=PERSON_ID -->">
+      <input type="hidden" name="job_id" value="<!-- TMPL_VAR NAME=JOB_ID -->">
+
+    <table>
+      <tr>
+
+	<th>First Name</th>
+	<td><!-- TMPL_VAR NAME=FIRST --></td>
+      </tr>
+      <tr>
+	<th>Last Name</th>
+	<td><!-- TMPL_VAR NAME=LAST --></td>
+      </tr>
+
+      <tr>
+	<th>Email</th>
+	<td><a href="mailto:<!-- TMPL_VAR NAME=EMAIL -->"><!-- TMPL_VAR NAME=EMAIL --></a></td>
+      </tr>
+      <tr>
+	<th>Phone</th>
+	<td><!-- TMPL_VAR NAME=PHONE --></td>
+
+      </tr>
+    </table>
+      <p class="center">
+	<input type="submit" value="Edit Details">
+      </p>
+
+    </form>
+    <form method="GET">
+      <input type="hidden" name="action" value="show_job">
+
+      <input type="hidden" name="job_id" value="<!-- TMPL_VAR NAME=JOB_ID -->">
+
+      <p class="center">
+	<input type="submit" value="Return to Job">
+      </p>
+
+    </form>
+
+<!-- TMPL_INCLUDE NAME="admin_footer.html" -->

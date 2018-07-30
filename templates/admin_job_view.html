@@ -1,0 +1,56 @@
+<!-- TMPL_INCLUDE NAME="admin_header.html" -->
+
+  <div class="job_toolbar">
+
+  <!-- TMPL_IF NAME=ASSIGNED_ID -->
+
+
+  <!-- TMPL_IF NAME=OPEN -->
+    <a href="helpdeskadmin.cgi?action=add_note&amp;files=1&amp;job_id=<!-- TMPL_VAR NAME=ID -->">Add Note</a>
+    <!-- TMPL_IF NAME=OWNER -->
+      | <a href="helpdeskadmin.cgi?action=assign&amp;job_id=<!-- TMPL_VAR NAME=ID -->">Re-assign</a> |
+      <a href="helpdeskadmin.cgi?action=close_job&amp;job_id=<!-- TMPL_VAR NAME=ID -->">Close Job</a>
+    <!-- /TMPL_IF -->
+   <!-- TMPL_ELSE -->
+    <a href="helpdeskadmin.cgi?action=reopen_job&amp;job_id=<!-- TMPL_VAR NAME=ID -->">Reopen</a> |
+    <a href="helpdeskadmin.cgi?action=new_job&amp;job_id=<!-- TMPL_VAR NAME=ID -->">Follow-up</a>
+   <!-- /TMPL_IF -->
+    <a href="helpdeskadmin.cgi/<!-- TMPL_VAR NAME=PUBLIC_ID -->.zip?action=save_job&amp;job_id=<!-- TMPL_VAR NAME=ID -->">| Save</a>
+
+  <!-- TMPL_ELSE -->
+    <a href="helpdeskadmin.cgi/<!-- TMPL_VAR NAME=PUBLIC_ID -->.zip?action=save_job&amp;job_id=<!-- TMPL_VAR NAME=ID -->">Save</a>
+
+  <!-- /TMPL_IF -->
+
+  </div>
+
+
+  <div class="job_summary">
+
+    <h4>User:<a href="helpdeskadmin.cgi?action=show_person&amp;person_id=<!-- TMPL_VAR NAME=USER_ID -->&amp;job_id=<!-- TMPL_VAR NAME=JOB_ID -->"><!-- TMPL_VAR NAME=USER_FIRST --> <!-- TMPL_VAR NAME=USER_LAST --> (<!-- TMPL_VAR NAME=USER_PHONE -->)</a> <a href="helpdeskadmin.cgi?action=show_cc&amp;job_id=<!-- TMPL_VAR NAME=JOB_ID -->"> +<!-- TMPL_VAR NAME= CC_COUNT --></a> | <!-- TMPL_VAR NAME=DATE -->  | <span class="<!-- TMPL_VAR NAME=STATUS -->"><!-- TMPL_VAR NAME=STATUS --></span> | <a href="/cgi-bin/helpdeskuser.cgi?action=show_job&amp;public_id=<!-- TMPL_VAR NAME=PUBLIC_ID -->">Public</a> | Assigned to:<!-- TMPL_IF NAME= ASSIGNED_ID --><a href="helpdeskadmin.cgi?action=show_person&amp;person_id=<!-- TMPL_VAR NAME=ASSIGNED_ID -->&amp;job_id=<!-- TMPL_VAR NAME=JOB_ID -->"><!-- TMPL_VAR NAME=ASSIGNED_NAME --></a><!-- TMPL_ELSE -->Not yet assigned<!-- /TMPL_IF --><!-- TMPL_IF NAME=COMMERCIAL --> | Commercial<!-- /TMPL_IF --></h4>
+
+    <h3><!-- TMPL_VAR NAME=TITLE --></h3>
+
+    <p><!-- TMPL_VAR NAME=SUMMARY --></p>
+  </div>
+
+<!-- TMPL_LOOP NAME=NOTES -->
+<!-- TMPL_IF NAME=PRIVATE -->
+    <div class="privatenote" id="NOTE<!-- TMPL_VAR NAME=ID -->">
+      <h4>Private Note on <!-- TMPL_VAR NAME=DATE --> from <!-- TMPL_VAR NAME=FIRST --> <!-- TMPL_VAR NAME=LAST --><!-- TMPL_IF NAME=TIME --> (<!-- TMPL_VAR NAME=TIME ESCAPE=HTML --> hours)<!-- /TMPL_IF --></h4>
+<!-- TMPL_ELSE -->
+    <div class="note" id="NOTE<!-- TMPL_VAR NAME=ID -->">
+      <h4><!-- TMPL_IF NAME=EMAIL_SENT --><img src="/images/email.png" alt="Email sent" title="Email Sent"> <!-- /TMPL_IF -->Note on <!-- TMPL_VAR NAME=DATE --> from <!-- TMPL_VAR NAME=FIRST --> <!-- TMPL_VAR NAME=LAST --><!-- TMPL_IF NAME=TIME --> (<!-- TMPL_VAR NAME=TIME ESCAPE=HTML --> hours)<!-- /TMPL_IF --></h4>
+
+<!-- /TMPL_IF -->
+      <p><!-- TMPL_VAR NAME=TEXT --></p>
+
+      <div class="files">
+        <!-- TMPL_LOOP NAME=FILES -->
+        <a href="helpdeskadmin.cgi/<!-- TMPL_VAR NAME=URI_NAME -->?action=send_file&amp;file_id=<!-- TMPL_VAR NAME=ID -->"><!-- TMPL_VAR NAME=NAME --></a>&nbsp;&nbsp;
+        <!-- /TMPL_LOOP -->
+      </div>
+    </div>
+
+<!-- /TMPL_LOOP -->
+<!-- TMPL_INCLUDE NAME="admin_footer.html" -->

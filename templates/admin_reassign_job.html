@@ -1,0 +1,27 @@
+<!-- TMPL_INCLUDE NAME="admin_header.html" -->
+
+    <h2 class="center">Re-assign Job</h2>
+
+    <form method="POST">
+      <input type="hidden" name="action" value="assign">
+      <input type="hidden" name="job_id" value="<!-- TMPL_VAR NAME=ID -->">
+
+      <table>
+	<tr>
+
+	  <th>Assign Job to</th>
+	  <td><select name="assign_to">
+	      <!-- TMPL_LOOP NAME=PEOPLE -->
+<option value="<!-- TMPL_VAR NAME=ID -->"><!-- TMPL_VAR NAME=FIRST --> <!-- TMPL_VAR NAME=LAST --></option>
+	      <!-- /TMPL_LOOP -->
+</select>
+</td>
+
+	</tr>
+      </table>
+
+      <p class="center"><input type="submit" value="Re-assign Job"></p>
+    </form>
+
+
+<!-- TMPL_INCLUDE NAME="admin_footer.html" -->

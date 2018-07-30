@@ -1,0 +1,42 @@
+<!-- TMPL_INCLUDE NAME="admin_header.html" -->
+
+
+  <h2 class="center">Add note</h2>
+
+  <form method="POST" enctype="multipart/form-data">
+
+    <input type="hidden" name="job_id" value="<!-- TMPL_VAR NAME=ID -->">
+
+    <table class="dynamic">
+      <tr>
+	<th>Note text</th>
+
+	<td><textarea name="text" rows="20" cols="70"><!-- TMPL_VAR NAME=TEXT --></textarea></td>
+      </tr>
+      <tr>
+	<th>Send email</th>
+	<td><input type="checkbox" name="send_email" <!-- TMPL_IF NAME=SEND_EMAIL -->checked<!-- /TMPL_IF -->></td>
+      </tr>
+      <tr>
+	<th>Keep note private</th>
+	<td><input type="checkbox" name="private" <!-- TMPL_IF NAME=PRIVATE -->checked<!-- /TMPL_IF -->></td>
+      </tr>
+      <tr>
+	<th>Time for this work (hours - optional)</th>
+	<td><input type="text" name="time" value="<!-- TMPL_VAR NAME=TIME ESCAPE=HTML -->"></td>
+      </tr>
+
+    <!-- TMPL_LOOP NAME=FILES -->
+    <tr>
+	<th>Attach File</th>
+	  <td><input type="file" name="<!-- TMPL_VAR NAME=NAME -->" size="40"></td>
+	    </tr>
+    <!-- /TMPL_LOOP -->
+    </table>
+
+    <input type="hidden" name="files" value="<!-- TMPL_VAR NAME=FILE_NUMBER -->">    
+    <p class="center"><input type="submit" name="action" value="Add more files"></p>
+    <p class="center"><input type="submit" name="action" value="Add note"></p>
+    </form>
+
+<!-- TMPL_INCLUDE NAME="admin_footer.html" -->
