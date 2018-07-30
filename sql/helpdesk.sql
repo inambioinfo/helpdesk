@@ -82,6 +82,7 @@ CREATE TABLE `Job` (
   `date_closed` datetime DEFAULT NULL,
   `magnitude` tinyint(4) DEFAULT NULL,
   `commercial` tinyint(1) DEFAULT NULL,
+  `budget_code` varchar(100) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `public_id` (`public_id`),
   KEY `person_id` (`person_id`,`public_id`,`assigned_person_id`,`status`),
@@ -146,4 +147,4 @@ CREATE TABLE `Person` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-07-30 13:39:31
+-- Dump completed on 2018-07-30 16:27:44
