@@ -345,11 +345,11 @@ sub show_job {
 
   # First we print out the header
 
-  my $get_job_details_sth = $dbh -> prepare("SELECT Job.id,Job.public_id,Job.commercial,Job.title,DATE_FORMAT(Job.date_opened,'\%e \%b \%Y'),Job.description,Job.status,Job.assigned_person_id,Person.first_name,Person.last_name,Job.person_id,Person.phone FROM Job,Person WHERE Job.id = ? AND Job.person_id = Person.id");
+  my $get_job_details_sth = $dbh -> prepare("SELECT Job.id,Job.public_id,Job.commercial,Job.title,DATE_FORMAT(Job.date_opened,'\%e \%b \%Y'),Job.description,Job.status,Job.assigned_person_id,Person.first_name,Person.last_name,Job.person_id,Person.phone,Job.budget_code FROM Job,Person WHERE Job.id = ? AND Job.person_id = Person.id");
 
   $get_job_details_sth -> execute($job_id) or do {print_bug($dbh->errstr());return;};
 
-  my ($fetched_id,$public_id,$commercial,$title,$date,$desc,$status,$assigned_person,$first,$last,$submitter_id,$phone) = $get_job_details_sth -> fetchrow_array();
+  my ($fetched_id,$public_id,$commercial,$title,$date,$desc,$status,$assigned_person,$first,$last,$submitter_id,$phone,$budget) = $get_job_details_sth -> fetchrow_array();
 
   unless ($fetched_id) {
     print_bug("No job found for ID \"$job_id\"");
@@ -364,20 +364,21 @@ sub show_job {
   }
 
   $template -> param(
-		     ID => $job_id,
-		     TITLE => modifyHTML($title),
-		     DATE => $date,
-		     CC_COUNT => $cc_count,
-		     SUMMARY => modifyHTML($desc),
-		     USER_FIRST => $first,
-		     USER_LAST => $last,
-		     USER_PHONE => $phone,
-		     USER_ID => $submitter_id,
-		     ASSIGNED_ID => $assigned_person,
-		     JOB_ID => $job_id,
-		     PUBLIC_ID => $public_id,
-		     COMMERCIAL => $commercial,
-		     );
+      ID => $job_id,
+      TITLE => modifyHTML($title),
+      DATE => $date,
+      CC_COUNT => $cc_count,
+      SUMMARY => modifyHTML($desc),
+      USER_FIRST => $first,
+      USER_LAST => $last,
+      USER_PHONE => $phone,
+      USER_ID => $submitter_id,
+      ASSIGNED_ID => $assigned_person,
+      JOB_ID => $job_id,
+      PUBLIC_ID => $public_id,
+      COMMERCIAL => $commercial,
+      BUDGET_CODE => $budget,
+      );
 
 
 
