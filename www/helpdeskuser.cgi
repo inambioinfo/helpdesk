@@ -317,8 +317,19 @@ sub complete_new_job {
   # We need a job identifier
   my $identifier = make_job_identifier();
 
+  # We need to know if we can assign a budget code
+  my @budget_codes = get_valid_budget_list($email);
+
+  my $budget_code_to_use;
+
+  if (@budget_codes) {
+      $budget_code_to_use = $budget_codes[0]->{CODE};
+  }
+
+  $budget_code_to_use = "" unless ($budget_code_to_use);
+
   # And now we can make the job
-  $dbh -> do("INSERT INTO Job (public_id,person_id,title,description,status,commercial,date_opened) VALUES (?,?,?,?,?,?,NOW())",undef,($identifier,$person_id,$title,$description,'open',$commercial)) or do {print_bug $dbh->errstr(); return};
+  $dbh -> do("INSERT INTO Job (public_id,person_id,title,description,status,commercial,date_opened,budget_code) VALUES (?,?,?,?,?,?,NOW(),?)",undef,($identifier,$person_id,$title,$description,'open',$commercial,$budget_code_to_use)) or do {print_bug $dbh->errstr(); return};
 
   # We need to send them an email confirming the
   # new job creation.
@@ -327,7 +338,7 @@ sub complete_new_job {
 
 Your Bioinformatics support request "$title" has been received and should be acted on in the near future.
 
-You job has been assigned an identifier which allows you to check on it's progress using the helpdesk system on the intranet.
+You job has been assigned an identifier which allows you to check on it\'s progress using the helpdesk system on the intranet.
 
 The identifier for your job is:
 
@@ -337,11 +348,36 @@ You can enter this identifier into the helpdesk system yourself or you can acces
 
 http://www.bioinformatics.babraham.ac.uk/cgi-bin/helpdeskuser.cgi?action=show_job&public_id=$identifier
 
-If you have any queries about any of this then please contact any member of the bioinformatics group.
-
 END_EMAIL_MESSAGE
 
-  send_email($email,'simon.andrews@babraham.ac.uk',"[OPEN] $title",$email_message);
+if (@budget_codes) {
+
+    $email_message .= "Your job has been assinged to budget code code\n\n";
+    $email_message .= $budget_codes[0]->{CODE} . " (".$budget_codes[0]->{DESCRIPTION}.")\n\n";
+
+    if (@budget_codes > 1) {
+	$email_message .= "You can also use one of the budgets listed below.  Click on a link to use that budget instead\n\n";
+
+	for my $index(0..$#budget_codes) {
+	    $email_message .= "$budget_codes[$index]->{CODE} http://www.bioinformatics.babraham.ac.uk/cgi-bin/helpdeskuser.cgi?action=set_budget_code&public_id=$identifier&code=$index\n\n";
+	}
+
+    }
+
+    if ($email =~ /babraham.ac.uk/i) {
+	$email_message .= "If you don't see the code you want to use listed, please reply to this message with the correct code and we can add it manually\n";
+    }
+}
+
+$email_message .= <<"END_EMAIL_MESSAGE";
+
+If you have any queries about any of this then please contact any member of the bioinformatics group.
+END_EMAIL_MESSAGE
+
+  ## TODO: Remove after testing
+
+#  send_email($email,'simon.andrews@babraham.ac.uk',"[OPEN] $title",$email_message);
+  send_email('simon.andrews@babraham.ac.uk','simon.andrews@babraham.ac.uk',"[OPEN] $title",$email_message);
 
   # And print the confirmation message
 
@@ -594,5 +630,52 @@ sub make_link {
   else {
     return "<a href=\"$text$following\">$text$following</a>";
   }
-
 }
+
+sub get_valid_budget_list {
+
+  my ($email) = @_;
+
+  my $budget_dbh = DBI->connect("DBI:mysql:database=sierra_budget;host=localhost","sierrauser","",{RaiseError=>0,AutoCommit=>1});
+
+  unless ($budget_dbh) {
+      print_bug("Couldn't connect to budget database:".$DBI::errstr);
+      exit;
+  }
+
+  # See what we can find for this email.  If we're not passed an email we return a
+  # non-redundant list of every possible code
+  my $sth;
+
+  if ($email) {
+      $sth = $budget_dbh->prepare("SELECT code,description FROM budget_codes WHERE email=?");
+      
+      $sth->execute($email) or do {
+	  print_bug("Failed to list valid budgets for $email: ".$dbh->errstr());
+	  exit;
+      };
+  }
+  else {
+      $sth = $budget_dbh->prepare("SELECT code,description FROM budget_codes");
+      
+      $sth->execute() or do {
+	  print_bug("Failed to list all valid budgets: ".$dbh->errstr());
+	  exit;
+      };
+  }
+
+  my @valid_codes;
+  my %seen_codes;
+
+  while (my ($code,$description) = $sth->fetchrow_array()) {
+
+      next if (exists $seen_codes{$code});
+      $seen_codes{$code}++;
+      push @valid_codes, {CODE => $code,
+			  DESCRIPTION => $description,};
+  }
+
+  return @valid_codes;
+}
+
+
