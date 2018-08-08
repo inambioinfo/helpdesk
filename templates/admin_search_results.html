@@ -20,6 +20,7 @@
       <th>Public ID</th>
       <th>Type</th>
       <th>Duration</th>
+      <th>Budget Code</th>
       <th>Open</th>
     </tr>
 
@@ -34,6 +35,7 @@
       <td><!-- TMPL_VAR NAME=PUBLIC_ID --></td>
       <td><!-- TMPL_IF NAME=COMMERCIAL -->Commercial<!-- TMPL_ELSE -->Academic<!-- /TMPL_IF --></td>
       <td><!-- TMPL_IF NAME=CLOSED --><!-- TMPL_VAR NAME=DURATION --><!-- TMPL_ELSE -->Still open<!-- /TMPL_IF --></td>
+      <td><!-- TMPL_VAR NAME=BUDGET_CODE --></td>
 
       <td>
 	<form method="GET">

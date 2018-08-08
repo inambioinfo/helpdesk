@@ -1701,7 +1701,7 @@ sub run_search {
   # We're actually going to be building up a large
   # SQL command, so we need somewhere to start from.
 
-  my $sql = "SELECT Job.id,Job.public_id,Job.person_id,Job.assigned_person_id,Job.title,DATE_FORMAT(Job.date_opened,'\%e \%b \%Y'),DATE_FORMAT(Job.date_closed,'\%e \%b \%Y'),Job.magnitude, Job.commercial from Job,Person WHERE Job.person_id=Person.id";
+  my $sql = "SELECT Job.id,Job.public_id,Job.person_id,Job.assigned_person_id,Job.title,DATE_FORMAT(Job.date_opened,'\%e \%b \%Y'),DATE_FORMAT(Job.date_closed,'\%e \%b \%Y'),Job.magnitude, Job.commercial, Job.budget_code from Job,Person WHERE Job.person_id=Person.id";
 
   # and now we have to add stuff to it.  We will need to know
   # how many items have been added so we can join with the correct
@@ -1997,7 +1997,7 @@ sub run_search {
     }
     last if ($count > $last_hit_index);
 
-    my ($id,$public_id,$person,$assigned,$title,$opened,$closed,$magnitude,$commercial) = @$hit;
+    my ($id,$public_id,$person,$assigned,$title,$opened,$closed,$magnitude,$commercial,$budget) = @$hit;
 
     my $person_name = get_name($person);
     my $person_email = get_email($person);
@@ -2024,6 +2024,7 @@ sub run_search {
 		 CLOSED => $closed,
 		 DURATION => $duration,
 		 COMMERCIAL => $commercial,
+		 BUDGET_CODE => $budget,
 		};
 
     ++$count;
