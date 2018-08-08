@@ -1,7 +1,7 @@
 <!-- TMPL_INCLUDE NAME="header.html" -->
 
   <div class="job_summary">
-    <h4>User:<!-- TMPL_VAR NAME=USER_FIRST --> <!-- TMPL_VAR NAME=USER_LAST --> (<!-- TMPL_VAR NAME=USER_PHONE -->) | <!-- TMPL_VAR NAME=DATE -->  | <span class="<!-- TMPL_VAR NAME=STATUS -->"><!-- TMPL_VAR NAME=STATUS --></span> | Assigned to:<!-- TMPL_IF NAME= ASSIGNED_NAME --><!-- TMPL_VAR NAME=ASSIGNED_NAME --><!-- TMPL_ELSE -->Not yet assigned<!-- /TMPL_IF --></h4>
+    <h4>User:<!-- TMPL_VAR NAME=USER_FIRST --> <!-- TMPL_VAR NAME=USER_LAST --> (<!-- TMPL_VAR NAME=USER_PHONE -->) | <!-- TMPL_IF NAME=BUDGET_CODE --><!-- TMPL_VAR NAME=BUDGET_CODE --><!-- TMPL_ELSE -->[No Budget]<!-- /TMPL_IF --> | <!-- TMPL_VAR NAME=DATE -->  | <span class="<!-- TMPL_VAR NAME=STATUS -->"><!-- TMPL_VAR NAME=STATUS --></span> | Assigned to:<!-- TMPL_IF NAME= ASSIGNED_NAME --><!-- TMPL_VAR NAME=ASSIGNED_NAME --><!-- TMPL_ELSE -->Not yet assigned<!-- /TMPL_IF --></h4>
 
     <h3><!-- TMPL_VAR NAME=TITLE --></h3>
 

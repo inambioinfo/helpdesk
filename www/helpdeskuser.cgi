@@ -31,6 +31,11 @@ if ($action) {
     show_job();
   }
 
+  elsif ($action eq 'set_budget') {
+    set_budget_code();
+  }
+
+
   elsif ($action eq 'new_job') {
     start_new_job();
   }
@@ -133,11 +138,11 @@ sub show_job {
     return;
   }
 
-  my $get_job_details_sth = $dbh -> prepare("SELECT Job.id,Job.title,DATE_FORMAT(Job.date_opened,'\%e \%b \%Y'),Job.description,Job.status,Job.assigned_person_id,Person.first_name,Person.last_name,Person.phone FROM Job,Person WHERE Job.public_id = ? AND Job.person_id = Person.id");
+  my $get_job_details_sth = $dbh -> prepare("SELECT Job.id,Job.title,DATE_FORMAT(Job.date_opened,'\%e \%b \%Y'),Job.description,Job.status,Job.assigned_person_id,Person.first_name,Person.last_name,Person.phone,Job.budget_code FROM Job,Person WHERE Job.public_id = ? AND Job.person_id = Person.id");
 
   $get_job_details_sth -> execute($public_id) or do {print_bug($dbh->errstr());return;};
 
-  my ($job_id,$title,$date,$desc,$status,$assigned_person,$first,$last,$phone) = $get_job_details_sth -> fetchrow_array();
+  my ($job_id,$title,$date,$desc,$status,$assigned_person,$first,$last,$phone,$budget) = $get_job_details_sth -> fetchrow_array();
 
   unless ($job_id) {
     print_error("No job found for ID \"$public_id\"");
@@ -164,6 +169,7 @@ sub show_job {
 		     ASSIGNED_NAME => $assigned_name,
 		     TITLE => modifyHTML($title),
 		     SUMMARY => modifyHTML($desc),
+		     BUDGET_CODE => $budget,
 		    );
 
   # Now we print any notes which have been added to the job
@@ -359,7 +365,7 @@ if (@budget_codes) {
 	$email_message .= "You can also use one of the budgets listed below.  Click on a link to use that budget instead\n\n";
 
 	for my $index(0..$#budget_codes) {
-	    $email_message .= "$budget_codes[$index]->{CODE} http://www.bioinformatics.babraham.ac.uk/cgi-bin/helpdeskuser.cgi?action=set_budget_code&public_id=$identifier&code=$index\n\n";
+	    $email_message .= "$budget_codes[$index]->{CODE} http://www.bioinformatics.babraham.ac.uk/cgi-bin/helpdeskuser.cgi?action=set_budget&public_id=$identifier&code=$index\n\n";
 	}
 
     }
@@ -386,6 +392,63 @@ END_EMAIL_MESSAGE
   $template -> param(ID=>$identifier);
 
   print $template -> output();
+}
+
+sub set_budget_code {
+
+  # This sub allows a user to change the budget code which was
+  # assigned to their job.
+
+  my $public_id = $q -> param('public_id');
+
+  unless ($public_id) {
+    print_bug ("No public_id found, can't identify job");
+    return;
+  }
+
+  # See if we can find a job and a persons email for this public id
+  my ($job_id,$email) = $dbh -> selectrow_array("SELECT Job.id, Person.email FROM Job,Person WHERE Job.public_id=? AND Job.person_id=Person.id",undef,($public_id));
+
+  unless ($job_id) {
+      print_bug("No job found with public_id $public_id");
+      return;
+  }
+
+  # Now get the list of budget codes we can choose from
+  my @budget_codes = get_valid_budget_list($email);
+
+  unless (@budget_codes) {
+      print_bug("Couldn't find any budget codes for $email");
+      return;
+  }
+
+
+  # See which one they want to use.
+  my $code_index = $q -> param("code");
+  unless (defined $code_index) {
+      print_bug("No code index found when setting budget codes");
+      return;
+  }
+
+  unless ($code_index =~ /^\d+$/) {
+      print_bug("Code index wasn't a number");
+      return;
+  }
+
+  if ($code_index > $#budget_codes || $code_index < 0) {
+      print_bug "Code index $code_index was an invalid range";
+      return;
+  }
+
+  # Set the code
+  $dbh -> do("UPDATE Job SET budget_code=? where id=?",undef,($budget_codes[$code_index]->{CODE},$job_id)) or do {
+      print_bug("Can't set new budget code:".$dbh->errstr());
+      return;
+  };
+
+  print $q -> redirect("helpdeskuser.cgi?action=show_job&public_id=$public_id");
+  return;
+
 }
 
 sub make_job_identifier {
