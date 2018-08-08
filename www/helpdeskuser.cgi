@@ -344,7 +344,7 @@ sub complete_new_job {
 
 Your Bioinformatics support request "$title" has been received and should be acted on in the near future.
 
-You job has been assigned an identifier which allows you to check on it\'s progress using the helpdesk system on the intranet.
+You job has been assigned an identifier which allows you to check on its progress using the helpdesk system on the intranet.
 
 The identifier for your job is:
 
