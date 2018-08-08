@@ -391,7 +391,7 @@ sub show_job {
     $template -> param(OPEN => 1);
   }
 
-  if ($user_id == $assigned_person) {
+  if (defined $assigned_person and $user_id == $assigned_person) {
     $template -> param(OWNER => 1);
   }
 
