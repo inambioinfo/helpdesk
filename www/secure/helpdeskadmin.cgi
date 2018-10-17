@@ -52,7 +52,11 @@ if ($action) {
     new_job_with_details();
   } elsif ($action eq 'add_note') {
     start_add_note();
-  } elsif ($action eq 'Add more files') {
+  } elsif ($action eq 'edit_job') {
+    start_edit_job();
+  }elsif ($action eq 'Edit job') {
+    finish_edit_job();
+  }elsif ($action eq 'Add more files') {
     start_add_note();
   } elsif ($action eq 'Add note') {
     finish_add_note();
@@ -1124,7 +1128,7 @@ sub start_add_note {
   # note to a job.
 
   my $template = HTML::Template -> new (filename => 'admin_add_note.html');
-
+  $template -> param(LOGIN_NAME=>$login_name);
   my $job_id = $q -> param('job_id');
 
   unless ($job_id) {
@@ -1380,13 +1384,135 @@ END_EMAIL_MESSAGE
       send_email($recipiant,$sender_email,"[UPDATED] $title",$email_message);
     }
 
-  }
+  } 
 
   # Now we can send them to the new note
 
   print $q->redirect("helpdeskadmin.cgi?action=show_job&job_id=${job_id}#NOTE$note_id");
 
 }
+
+sub start_edit_job {
+
+    
+
+    # This spits out the form to edit the main details of a job
+    my $job_id = $q -> param('job_id');
+
+    unless ($job_id) {
+	print_bug("No job ID supplied when adding note");
+	return;
+    }
+
+
+    my $template = HTML::Template -> new (filename => 'admin_edit_job.html');
+    
+    $template -> param(LOGIN_NAME => $login_name);
+
+    # Get the information for the job and populate the template
+    my $get_job_details_sth = $dbh -> prepare("SELECT Job.id,Job.commercial,Job.title,Job.description,Person.email,Job.budget_code FROM Job,Person WHERE Job.id = ? AND Job.person_id = Person.id");
+    
+    $get_job_details_sth -> execute($job_id) or do {print_bug($dbh->errstr());return;};
+
+    my ($fetched_id,$commercial,$title,$desc,$email,$budget) = $get_job_details_sth -> fetchrow_array();
+
+    unless ($fetched_id) {
+	print_bug("No job found for ID \"$job_id\"");
+	return;
+    }
+
+
+    $template -> param(
+	ID => $job_id,
+	TITLE => $title,
+	SUMMARY => $desc,
+	USER_EMAIL => $email,
+	COMMERCIAL => $commercial,
+	BUDGET_CODE => $budget,
+	);
+
+    print $template-> output();
+
+}
+
+sub finish_edit_job {
+
+    # This sub takes a completed job edit request, checks it
+    # out and updated the appropriate entry in the database
+
+    my $job_id = $q -> param('job_id');
+
+    unless ($job_id) {
+	print_bug("No job ID supplied when adding note");
+	return;
+    }
+
+
+    my $email = lc($q -> param('user_email'));
+
+    unless ($email) {
+	print_error ("No email address was supplied");
+	return;
+    }
+
+    unless ($email =~ /^.+\@[\w\-\.]+$/){
+	print_error("Email address doesn't look right");
+	return;
+    }
+
+    my $title = $q -> param('title');
+
+
+    unless ($title) {
+	print_error ("No job title was supplied");
+	return;
+    }
+
+    $title = $q -> escapeHTML($title);
+
+    my $commercial = $q->param("commercial");
+
+    if ($commercial) {
+	$commercial = 1;
+    }
+    else {
+	$commercial = 0;
+    }
+
+    my $description = $q -> param('summary');
+
+    unless ($description) {
+	print_error ("No job description was supplied");
+	return;
+    }
+
+    $description = $q -> escapeHTML($description);
+
+
+    # It's OK for this to be blank
+    my $budget_code_to_use = $q -> param('budget_code');
+
+
+    # Now we need to know whether the person referenced
+    # exists in our database already
+
+    my $person_id = lookup_person_id($email);
+
+    unless ($person_id) {
+	print_error("Can't change owner to someone not already in the database - sorry");
+    }
+
+    # Right, we can edit the job
+
+    $dbh -> do("UPDATE Job set person_id=?,title=?,description=?,commercial=?,budget_code=? WHERE id=?",undef,($person_id,$title,$description,$commercial,$budget_code_to_use,$job_id)) or do {print_bug $dbh->errstr(); return};
+
+ 
+    print $q->redirect("helpdeskadmin.cgi?action=show_job&job_id=$job_id");
+
+}
+
+
+
 
 sub show_cc {
 

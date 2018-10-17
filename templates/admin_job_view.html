@@ -6,7 +6,8 @@
 
 
   <!-- TMPL_IF NAME=OPEN -->
-    <a href="helpdeskadmin.cgi?action=add_note&amp;files=1&amp;job_id=<!-- TMPL_VAR NAME=ID -->">Add Note</a>
+    <a href="helpdeskadmin.cgi?action=add_note&amp;files=1&amp;job_id=<!-- TMPL_VAR NAME=ID -->">Add Note</a> |
+    <a href="helpdeskadmin.cgi?action=edit_job&amp;job_id=<!-- TMPL_VAR NAME=ID -->">Edit Job</a>
     <!-- TMPL_IF NAME=OWNER -->
       | <a href="helpdeskadmin.cgi?action=assign&amp;job_id=<!-- TMPL_VAR NAME=ID -->">Re-assign</a> |
       <a href="helpdeskadmin.cgi?action=close_job&amp;job_id=<!-- TMPL_VAR NAME=ID -->">Close Job</a>
@@ -18,6 +19,7 @@
     <a href="helpdeskadmin.cgi/<!-- TMPL_VAR NAME=PUBLIC_ID -->.zip?action=save_job&amp;job_id=<!-- TMPL_VAR NAME=ID -->">| Save</a>
 
   <!-- TMPL_ELSE -->
+    <a href="helpdeskadmin.cgi?action=edit_job&amp;job_id=<!-- TMPL_VAR NAME=ID -->">Edit Job</a> |
     <a href="helpdeskadmin.cgi/<!-- TMPL_VAR NAME=PUBLIC_ID -->.zip?action=save_job&amp;job_id=<!-- TMPL_VAR NAME=ID -->">Save</a>
 
   <!-- /TMPL_IF -->
